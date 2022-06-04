@@ -1,26 +1,41 @@
-import Footer from '@components/Footer'
-import Header from '@components/Header'
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import { Button, Heading, Link, Spinner, Stack } from '@chakra-ui/react'
+import * as RD from '@devexperts/remote-data-ts'
+import NextLink from 'next/link'
+import { signOut } from 'utils/auth'
+import { useSession } from 'utils/userContext'
+import { pipe } from 'fp-ts/lib/function'
 
-const Home: NextPage = () => {
+export default function IndexPage() {
+  const session = useSession()
   return (
-    <div className="container">
-      <Head>
-        <title>Next.js Starter!</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <Header title="Welcome to my app!" />
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-      </main>
-
-      <Footer />
-    </div>
+    <Stack spacing={4}>
+      <Heading color="whiteAlpha.900">
+        {pipe(
+          session,
+          RD.fold(
+            () => (
+              <>
+                <NextLink href="/Login" passHref>
+                  <Link color="gradient.to">Login</Link>
+                </NextLink>
+              </>
+            ),
+            () => <Spinner />,
+            e => <>{e.message}</>,
+            s => (
+              <Stack spacing={4} alignItems="center">
+                <span>{s.user?.id} </span>
+                <Button onClick={() => signOut()} textColor="gradient.to">
+                  Log Out
+                </Button>
+                <NextLink href="/app/editaccount" passHref>
+                  <Link color="gradient.to">Edit Account</Link>
+                </NextLink>
+              </Stack>
+            ),
+          ),
+        )}
+      </Heading>
+    </Stack>
   )
 }
-
-export default Home

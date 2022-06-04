@@ -5,14 +5,24 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "next export"
+    "export": "next export",
+    "gen:theme-typings": "chakra-cli tokens styles/chakraTheme.ts",
+    "postinstall": "npm run gen:theme-typings"
   },
   "dependencies": {
-    "next": "^12.1.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "@chakra-ui/react": "^2.1.2",
+    "@devexperts/remote-data-ts": "^2.1.1",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@supabase/supabase-js": "^1.35.3",
+    "fp-ts": "^2.12.1",
+    "framer-motion": "^6",
+    "next": "^12.1.6",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.0.0",
     "@netlify/plugin-nextjs": "^4.7.0",
     "@types/node": "^17.0.35",
     "@types/react": "^18.0.9",
@@ -26,6 +36,8 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "io-ts": "^2.0.0",
+    "io-ts-types": "0.5.16",
     "prettier": "2.4.0",
     "typescript": "^4.6.4"
   }
